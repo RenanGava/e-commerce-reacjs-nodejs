@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  back-end:
+    depends_on:
+      - postgres
+    build: ./
+    ports:
+      - 3333:3333
+    env_file:
+      - ./.env
+    environment:
+      DATABASE_URL: postgres://postgres:admin@postgres:5432/db-ecommerce?schema=public
+    command: ./entrypoint.sh
+    
+  postgres:
+    image: postgres
+    env_file:
+      - ./.env
+    ports:
+      - 5444:5432
+    volumes:
+    # aqui criamos onde os dados do banco de dados serão armazenados
+      - postgres:/data/db
+
+volumes:
+  postgres:

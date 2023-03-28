@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 String         @id @default(uuid())
+  stripe_customer_id String
+  avatar             String
+  email              String         @unique
+  name               String
+  password           String
+  refresh_token      Refresh_token?
+  order              Order[]
+
+  @@map("users")
+}
+
+model Refresh_token {
+  id        String @id @default(uuid())
+  expirenIn Int
+  user      User   @relation(fields: [userId], references: [id])
+  userId    String @unique
+
+  @@map("refresh_token")
+}
+
+model Products {
+  id                String   @id @default(uuid())
+  stripe_product_id String   @unique
+  name              String
+  description       String
+  amount            Int
+  stock             Int
+  price             Float
+  category          Category @relation(fields: [category_id], references: [id])
+  order             Order    @relation(fields: [order_id], references: [id])
+
+  order_id    String
+  category_id String
+
+  @@map("products")
+}
+
+model Category {
+  id      String     @id @default(uuid())
+  name    String     @unique
+  product Products[]
+
+  @@map("categories")
+}
+
+model Order {
+  id         String     @id @default(uuid())
+  isComplete Boolean
+  
+  user       User       @relation(fields: [userId], references: [id])
+  product    Products[]
+  userId     String
+}
+
+model Address {
+  id      String @id @default(uuid())
+  country String
+  state   String
+  city    String
+  cep     String
+  address String
+  number  Int
+}
