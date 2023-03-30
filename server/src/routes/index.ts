@@ -1,4 +1,5 @@
-import { Router } from 'express'
+import { Request, Response, Router } from 'express'
+import { isAuthenticated } from '../middlewares/IsAuthenticated'
 import { userRouter } from './user/user.routes'
 
 const router = Router()
@@ -8,22 +9,22 @@ router.use("/user", userRouter)
 // router.use("/categories")
 
 
-// router.post('/', upload.array("files"), async (request: Request, response: Response) => {
+// router.post('/', isAuthenticated, async (request: Request, response: Response) => {
 
-//     const { files } = request
-//     const { name } = request.body
+//     const { userId } =  request.headers
 
-//     const data = await prisma.user.create({
-//         data:{
+//     console.log(userId);
+    
+//     const data = {
 //         avatar: '',
 //         email: 'olámundo',
 //         name:'Renan',
 //         stripe_customer_id:""
-//     }})
+//     }
 
-    
 
-//     return response.json({ files, name, data })
+
+//     return response.json({data, userId})
 // })
 
 
