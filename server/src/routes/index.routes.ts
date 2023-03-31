@@ -1,12 +1,11 @@
-import { Request, Response, Router } from 'express'
-import { isAuthenticated } from '../middlewares/IsAuthenticated'
+import { Router } from 'express'
 import { userRouter } from './user/user.routes'
 
 const router = Router()
 
 router.use("/user", userRouter)
+router.use("/categories")
 // router.use("/products")
-// router.use("/categories")
 
 
 // router.post('/', isAuthenticated, async (request: Request, response: Response) => {

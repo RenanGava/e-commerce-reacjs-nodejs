@@ -1,5 +1,5 @@
 yarn install
 yarn prisma generate
-yarn prisma migrate dev --name 'create migration'
+yarn prisma migrate dev
 yarn build
 yarn start

@@ -10,6 +10,15 @@ class DetailUserUseCase{
         const user = await prisma.user.findFirst({
             where:{
                 id: userId
+            },
+            select:{
+                avatar: true,
+                email: true,
+                id: true,
+                name: true,
+                order: true,
+                stripe_customer_id: true,
+                password: false
             }
         })
 
