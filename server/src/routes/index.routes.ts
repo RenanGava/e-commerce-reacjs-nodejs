@@ -3,7 +3,6 @@ import { userRouter } from './user/user.routes'
 import { categoryRouter } from './categories/categories.routes'
 import { productsRouter } from './products/products.routes'
 import { stripe } from '../service/Stripe'
-import Stripe from 'stripe'
 
 const router = Router()
 
