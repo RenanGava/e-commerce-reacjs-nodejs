@@ -20,6 +20,7 @@ model User {
   password           String
   refresh_token      Refresh_token?
   order              Order[]
+  address            Address[]
 
   @@map("users")
 }
@@ -42,9 +43,9 @@ model Products {
   stock             Int
   price             Float
   category          Category @relation(fields: [category_id], references: [id])
-  order             Order    @relation(fields: [order_id], references: [id])
+  order             Order?    @relation(fields: [order_id], references: [id])
 
-  order_id    String
+  order_id    String?
   category_id String
 
   @@map("products")
@@ -65,6 +66,8 @@ model Order {
   user       User       @relation(fields: [userId], references: [id])
   product    Products[]
   userId     String
+
+  @@map("order")
 }
 
 model Address {
@@ -75,4 +78,8 @@ model Address {
   cep     String
   address String
   number  Int
+  userId  String
+
+  user    User    @relation(fields: [userId], references: [id])
+
 }

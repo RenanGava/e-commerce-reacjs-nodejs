@@ -1,30 +1,54 @@
-import { Router } from 'express'
+import express, { Request, Response, Router } from 'express'
 import { userRouter } from './user/user.routes'
+import { categoryRouter } from './categories/categories.routes'
+import { productsRouter } from './products/products.routes'
+import { stripe } from '../service/Stripe'
+import Stripe from 'stripe'
 
 const router = Router()
 
+
 router.use("/user", userRouter)
-router.use("/categories")
-// router.use("/products")
+router.use("/categories", categoryRouter)
+router.use("/products", productsRouter)
 
 
-// router.post('/', isAuthenticated, async (request: Request, response: Response) => {
+router.post('/webhook', express.raw({ type: "application/json" }), (request: Request, response: Response) => {
 
-//     const { userId } =  request.headers
+    const payload = request.body
 
-//     console.log(userId);
+
+    const endpointWebhook = process.env.ENDPOINT_WEBHOOK_KEY
+
+    const signature = stripe.webhooks.generateTestHeaderString({
+        payload: JSON.stringify(payload),
+        secret: endpointWebhook
+    })
     
-//     const data = {
-//         avatar: '',
-//         email: 'olámundo',
-//         name:'Renan',
-//         stripe_customer_id:""
-//     }
 
 
+    let event = stripe.webhooks.constructEvent(JSON.stringify(payload), signature, endpointWebhook)
 
-//     return response.json({data, userId})
-// })
+
+    try {
+        
+        switch(event.type){
+            case 'price.created':
+                console.log("Price -->",event.type)
+            case 'product.created':
+                console.log("Product -->",event.type)
+        }
+
+
+    } catch (error) {
+
+        // console.log(error)
+
+        return response.status(400).json({
+            message: `Webhooke error ${error.message}`
+        })
+    }
+})
 
 
 
