@@ -16,39 +16,31 @@ router.post('/webhook', express.raw({ type: "application/json" }), (request: Req
 
     const payload = request.body
 
-
     const endpointWebhook = process.env.ENDPOINT_WEBHOOK_KEY
 
     const signature = stripe.webhooks.generateTestHeaderString({
         payload: JSON.stringify(payload),
         secret: endpointWebhook
     })
-    
-
 
     let event = stripe.webhooks.constructEvent(JSON.stringify(payload), signature, endpointWebhook)
 
-
     try {
-        
-        switch(event.type){
+
+        switch (event.type) {
             case 'price.created':
-                console.log("Price -->",event.type)
+                console.log("Price -->", event.type)
             case 'product.created':
-                console.log("Product -->",event.type)
+                console.log("Product -->", event.type)
         }
 
 
     } catch (error) {
-
-        // console.log(error)
 
         return response.status(400).json({
             message: `Webhooke error ${error.message}`
         })
     }
 })
-
-
 
 export { router }
