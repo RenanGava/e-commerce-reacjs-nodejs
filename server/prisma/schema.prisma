@@ -39,9 +39,9 @@ model Products {
   stripe_product_id String   @unique
   name              String
   description       String
-  amount            Int
-  stock             Int
-  price             Float
+  amount            String
+  stock             String
+  price             String
   category          Category @relation(fields: [category_id], references: [id])
   order             Order?    @relation(fields: [order_id], references: [id])
 

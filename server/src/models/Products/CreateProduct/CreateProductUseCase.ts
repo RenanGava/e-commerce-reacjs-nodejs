@@ -5,8 +5,9 @@ interface ICreateProducts {
     name: string
     description: string
     category_id: string
-    stock: number
-    price: number
+    stock: string
+    price: string
+    images?: string[]
 }
 
 interface PayloadCreateStripeProduct{
@@ -51,7 +52,7 @@ class CreateProductsUseCase {
         const product = await prisma.products.create({
             data: {
                 name: name,
-                amount: 0,
+                amount: '',
                 description: description,
                 price: price,
                 stock: stock,
