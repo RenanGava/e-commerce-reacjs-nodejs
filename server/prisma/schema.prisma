@@ -36,11 +36,12 @@ model Refresh_token {
 
 model Products {
   id                String   @id @default(uuid())
+  active            Boolean
   stripe_product_id String   @unique
   name              String
   description       String
-  amount            String
-  stock             String
+  amount            Int
+  stock             Int
   price             String
   category          Category @relation(fields: [category_id], references: [id])
   order             Order?    @relation(fields: [order_id], references: [id])

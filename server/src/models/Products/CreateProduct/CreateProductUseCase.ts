@@ -5,7 +5,7 @@ interface ICreateProducts {
     name: string
     description: string
     category_id: string
-    stock: string
+    stock: number
     price: string
     images?: string[]
 }
@@ -33,26 +33,28 @@ class CreateProductsUseCase {
            throw new Error("Product Already exists!") 
         }
 
+        /**
+         * desta forma criamos o produto e preço juntos
+         * mas impossibilita de apagar o produto dentro do stripe quando form preciso.
+         */
         const productCreateStripe = await stripe.products.create({
             name: name,
+            description: description,
+            default_price_data:{
+                currency: "brl",
+                unit_amount: Number(price)
+            },
             metadata:{
-                description: description,
-                price: price,
                 stock: stock
             }
-        })
-
-        await stripe.prices.create({
-            product: productCreateStripe.id,
-            unit_amount: 1000,
-            currency: 'brl',
         })
         
 
         const product = await prisma.products.create({
             data: {
                 name: name,
-                amount: '',
+                active: productCreateStripe.active,
+                amount: 0,
                 description: description,
                 price: price,
                 stock: stock,

@@ -6,8 +6,8 @@ interface IUpdateProductProps {
     id?: string
     name?: string
     description?: string
-    amount?: string
-    stock?: string
+    amount?: number
+    stock?: number
     price?: string
     category?: string
 }

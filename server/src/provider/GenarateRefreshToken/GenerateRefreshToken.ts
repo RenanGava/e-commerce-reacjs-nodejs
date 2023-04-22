@@ -7,8 +7,6 @@ export class GenerateRefreshToken {
     async execute(userId: string){
 
         const expiresIn = daysjs().add(20, 'seconds').unix()
-
-        console.log(expiresIn);
         
 
         const generateRefreshToken = await prisma.refresh_token.create({
