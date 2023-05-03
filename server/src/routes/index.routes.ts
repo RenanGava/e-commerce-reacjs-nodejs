@@ -3,6 +3,7 @@ import { userRouter } from './user/user.routes'
 import { categoryRouter } from './categories/categories.routes'
 import { productsRouter } from './products/products.routes'
 import { stripe } from '../service/Stripe'
+import { orderRouter } from './order/order.routes'
 
 const router = Router()
 
@@ -10,6 +11,7 @@ const router = Router()
 router.use("/user", userRouter)
 router.use("/categories", categoryRouter)
 router.use("/products", productsRouter)
+router.use("/order", orderRouter)
 
 
 router.post('/webhook', express.raw({ type: "application/json" }), (request: Request, response: Response) => {

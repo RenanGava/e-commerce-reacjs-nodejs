@@ -6,7 +6,7 @@ class DeleteProductsUseCase {
 
 
     async execute(id: any) {
-        const productAlreadyExists = await prisma.products.findFirst({
+        const productAlreadyExists = await prisma.product.findFirst({
             where: { 
                 id: id
             }
@@ -16,11 +16,11 @@ class DeleteProductsUseCase {
             throw new Error("Product Not Exists!")
         }
 
-        const [stripeDel, prismaDel] =  await Promise.all([
+        const productDesactive =  await Promise.all([
             stripe.products.update(productAlreadyExists.stripe_product_id,{
                 active: false
             }),
-            prisma.products.update({
+            prisma.product.update({
                 where:{
                     id: productAlreadyExists.id
                 },
@@ -32,10 +32,7 @@ class DeleteProductsUseCase {
         
         
 
-        return {
-            stripeDel,
-            prismaDel
-        }
+        return productDesactive
 
     }
 }

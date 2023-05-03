@@ -26,7 +26,7 @@ class UpdateProductUseCase {
         stock
     }: IUpdateProductProps) {
 
-        const productAlreadyExists = await prisma.products.findFirst({
+        const productAlreadyExists = await prisma.product.findFirst({
             where: { 
                 id: id 
             }
@@ -36,7 +36,7 @@ class UpdateProductUseCase {
             throw new Error('Product Not Already Exists!')
         }
 
-        const updateProduct = await prisma.products.update({
+        const updateProduct = await prisma.product.update({
             where: {
                 id: id
             },
@@ -56,7 +56,6 @@ class UpdateProductUseCase {
                 name: name,
                 description: description,
                 metadata: {
-                    price: price,
                     stock: stock
                 }
             }

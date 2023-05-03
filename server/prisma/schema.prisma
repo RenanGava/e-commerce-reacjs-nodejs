@@ -34,8 +34,8 @@ model Refresh_token {
   @@map("refresh_token")
 }
 
-model Products {
-  id                String   @id @default(uuid())
+model Product {
+  id                String  @unique  @id @default(uuid())
   active            Boolean
   stripe_product_id String   @unique
   name              String
@@ -44,18 +44,18 @@ model Products {
   stock             Int
   price             String
   category          Category @relation(fields: [category_id], references: [id])
-  order             Order?    @relation(fields: [order_id], references: [id])
+  order             Order?   @relation(fields: [order_id], references: [id])
 
   order_id    String?
   category_id String
 
-  @@map("products")
+  @@map("product")
 }
 
 model Category {
   id      String     @id @default(uuid())
   name    String     @unique
-  product Products[]
+  product Product[]
 
   @@map("categories")
 }
@@ -63,9 +63,9 @@ model Category {
 model Order {
   id         String     @id @default(uuid())
   isComplete Boolean
-  
+  inCart     Boolean
   user       User       @relation(fields: [userId], references: [id])
-  product    Products[]
+  product    Product[]
   userId     String
 
   @@map("order")
@@ -81,6 +81,5 @@ model Address {
   number  Int
   userId  String
 
-  user    User    @relation(fields: [userId], references: [id])
-
+  user User @relation(fields: [userId], references: [id])
 }

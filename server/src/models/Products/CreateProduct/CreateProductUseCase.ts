@@ -23,7 +23,7 @@ class CreateProductsUseCase {
         price,
         stock
     }:ICreateProducts) {
-        const productAlreadyExist = await prisma.products.findFirst({
+        const productAlreadyExist = await prisma.product.findFirst({
             where:{
                 name: name
             }
@@ -50,7 +50,7 @@ class CreateProductsUseCase {
         })
         
 
-        const product = await prisma.products.create({
+        const product = await prisma.product.create({
             data: {
                 name: name,
                 active: productCreateStripe.active,

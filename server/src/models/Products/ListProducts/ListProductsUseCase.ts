@@ -7,7 +7,7 @@ class ListProductsUseCase{
 
     async execute(){
 
-        const products = await prisma.products.findMany()
+        const products = await prisma.product.findMany()
 
         return products
     }
