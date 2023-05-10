@@ -1,4 +1,4 @@
-# E-commerce Nodejs/Nextjs
+# E-commerce Nodejs
 
 Essa aplicação foi desenvolvida para fins de estudo e aprimoramento em autenticação e autorização de usuários no app.
 
