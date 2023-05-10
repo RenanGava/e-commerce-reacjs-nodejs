@@ -7,7 +7,7 @@ class GenerateTokenJWT{
         
         const token = sign({}, process.env.JWT_SECRET_KEY, {
             subject: userId,
-            expiresIn: '20s'
+            expiresIn: '30d'
         })
 
         return token
