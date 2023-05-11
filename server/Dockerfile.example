@@ -6,7 +6,7 @@ COPY tsconfig.json .
 COPY package.json .
 EXPOSE 80
 # Colocar a URL Depois que o Fly.io criar o banco de dados
-ENV DATABASE_URL="postgres://misty_rain_1377:vPCU4YQyIGiKkU1@misty-rain-1377-db.flycast:5432/misty_rain_1377?sslmode=disable"
+ENV DATABASE_URL="URL Banco de dados"
 RUN yarn install
 RUN yarn prisma generate
 RUN yarn prisma migrate deploy
